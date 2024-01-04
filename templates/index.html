@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sql Editor Online</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
@@ -26,7 +27,7 @@
                     <br/>
                     <form method="POST" action="/process_query">
                     <textarea name="raw_query" id="editor"></textarea>
-                    <button type="reset">Clear</button>
+                    <button type="reset" id="clearButton" onclick="clearer()">Clear</button>
                     <button type="submit">Run</button>
                 </form>
                 </div>
@@ -43,6 +44,11 @@
         <div class="row">
             <h5>Results</h5>
             {{ results.to_html() | safe }}
+            <!-- <div class="container mt-4">
+                <table class="table table-bordered table-striped">
+                    {{ results.to_html() | safe }}
+                </table>
+            </div> -->
         </div>
     </div>
 
@@ -55,7 +61,20 @@
         autoCloseBrackets:true,
         autoCloseTags: true
     })
+    function clearer(){
+        var clearButton = document.querySelector('#clearButton');
 
+        // Add click event listener to the clear button
+        clearButton.addEventListener('click', function () {
+        // Clear the editor content
+        console.log("Entered");
+        editor.setValue('');
+        });
+    } 
+    
    </script>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

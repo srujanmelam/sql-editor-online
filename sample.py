@@ -11,6 +11,19 @@ def sql_executor(raw_query):
     data = c.fetchall()
     return data
 
+# def sql_executor(raw_query):
+#     # Split the raw query string into individual queries
+#     queries = [query.strip() for query in raw_query.split(';') if query.strip()]
+
+#     # Execute each query
+#     results = []
+#     for query in queries:
+#         c.execute(query)
+#         data = c.fetchall()
+#         results.append(data)
+
+#     return results
+
 #init app
 app = Flask(__name__)
 
