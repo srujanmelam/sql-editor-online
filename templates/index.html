@@ -38,12 +38,29 @@
         </div>
         <hr/>
         <div class="row">
-            {{ raw_query }}
+            <h5>Executed Queries</h5>
+            <ol>
+                {% for query in queries %}
+                <li> {{ query }} </li>
+                {% endfor %} 
+            </ol>
+ 
         </div>
         <hr/>
         <div class="row">
             <h5>Results</h5>
+          
             {{ results.to_html() | safe }}
+
+            <!-- <div class="container mt-4">
+                <table class="table table-bordered table-striped">
+                    {{ results.to_html() | safe }}
+                </table>
+            </div> -->
+        </div>
+        <div class="row">
+            <h5>Errors:</h5>
+            {{ errors.to_html() | safe }}
             <!-- <div class="container mt-4">
                 <table class="table table-bordered table-striped">
                     {{ results.to_html() | safe }}
@@ -67,7 +84,6 @@
         // Add click event listener to the clear button
         clearButton.addEventListener('click', function () {
         // Clear the editor content
-        console.log("Entered");
         editor.setValue('');
         });
     } 
