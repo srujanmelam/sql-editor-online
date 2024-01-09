@@ -14,7 +14,7 @@
     <script type="text/javascript" src="{{url_for('static',filename='codemirror-5.65.16/mode/sql/sql.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static',filename='codemirror-5.65.16/addon/edit/closebrackets.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static',filename='codemirror-5.65.16/addon/edit/closetag.js')}}"></script>
-    
+    <script type="text/javascript" src="{{url_for('static',filename='sqlScript.js')}}"></script>
 </head>
 <body>
     
@@ -27,11 +27,14 @@
                     <br/>
                     <form method="POST" action="/process_query">
                     <textarea name="raw_query" id="editor"></textarea>
-                    <button type="reset" id="clearButton" onclick="clearer()">Clear</button>
+                   
                     <button type="submit">Run</button>
+                    
                 </form>
                 </div>
-                
+                <button type="reset" id="clearButton" onclick="clearer()">Clear</button>
+                <button id="save" onclick="downloadSQL()">Save Changes</button>
+                <button id="load" onclick="loadSQL()">Load Changes</button>
             </div>
 
 
@@ -48,47 +51,19 @@
         </div>
         <hr/>
         <div class="row">
-            <h5>Results</h5>
-          
-            {{ results.to_html() | safe }}
-
-            <!-- <div class="container mt-4">
-                <table class="table table-bordered table-striped">
-                    {{ results.to_html() | safe }}
-                </table>
-            </div> -->
+            <h5>Results:</h5>
+        
+            {{ results.to_html(classes='styled-table', border=0, index=False) | safe }}
         </div>
         <div class="row">
             <h5>Errors:</h5>
             {{ errors.to_html() | safe }}
-            <!-- <div class="container mt-4">
-                <table class="table table-bordered table-striped">
-                    {{ results.to_html() | safe }}
-                </table>
-            </div> -->
         </div>
     </div>
-
+    <script type="text/javascript">
+        
+    </script>
    </section>
-   <script type="text/javascript">
-    var editor = CodeMirror.fromTextArea(document.getElementById('editor'),{
-        mode:'sql',
-        theme:'monokai',
-        lineNumbers:true,
-        autoCloseBrackets:true,
-        autoCloseTags: true
-    })
-    function clearer(){
-        var clearButton = document.querySelector('#clearButton');
-
-        // Add click event listener to the clear button
-        clearButton.addEventListener('click', function () {
-        // Clear the editor content
-        editor.setValue('');
-        });
-    } 
-    
-   </script>
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

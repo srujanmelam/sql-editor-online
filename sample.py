@@ -52,16 +52,32 @@ def process_query():
         raw_query = remove_comments(raw_query)
         queries = [query.strip() for query in raw_query.split(';') if query.strip()]
         initial_results = sql_executor(queries)
-        # num_columns = [len(item) for sublist in initial_results['results'] for item in sublist]
-        # num_columns = num_columns[0] if num_columns else None
-        #print("Required Length is : ",num_columns)
+        num_columns = [len(item) for sublist in initial_results['results'] for item in sublist]
+        num_columns = num_columns[0] if num_columns else None
+        print("Required Length is : ",num_columns)
         # Generate column names with numbers
+        results1 = initial_results['results']
         results = pd.DataFrame(initial_results['results'])
-        #print("Results are : ",results)
+        print("initial data",initial_results['results'])
+        print(results)
+        newResults = []
+        for i in results1:
+            if(len(i)>0):
+                newResults.append(i)
+
+        
+
+        styled_html = results.style.set_table_styles([
+    {'selector': 'th', 'props': [('border', '1px solid black')]},
+    {'selector': 'td, th', 'props': [('border-collapse', 'collapse'), ('border', '1px solid black'), ('padding', '8px')]},
+    {'selector': 'table', 'props': [('border-collapse', 'collapse'), ('width', '100%')]},
+])
+       
+        print("Results are : ",newResults)
         errors = pd.DataFrame(initial_results['errors'])
-        #print("Errors are: ", errors)
-    return render_template('index.html',raw_query = raw_query,results = results,queries = queries,errors = errors)
+        print("Errors are: ", errors)
+    return render_template('index.html',raw_query = raw_query,results = styled_html,queries = queries,errors = errors)
+
 
 if __name__ == '__main__':
     app.run(debug=True,use_reloader=True)
-        
