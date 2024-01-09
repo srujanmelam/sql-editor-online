@@ -15,9 +15,11 @@ c = conn.cursor()
 def sql_executor(queries):
     results = []
     errors = []
+    success_queries = []
     for query in queries:
         try:
             c.execute(query)
+            success_queries.append(query)
         except Exception as e:
             # Handle the exception here
             error_message = f"Error executing SQL query: {e}"
@@ -26,7 +28,7 @@ def sql_executor(queries):
         results.append(data)
     
 
-    return {'results': results, 'errors': errors}
+    return {'results': results, 'errors': errors, 'success_queries':success_queries}
 
 
 
@@ -58,6 +60,7 @@ def process_query():
         print("Required Length is : ",num_columns)
         # Generate column names with numbers
         results1 = initial_results['results']
+        success_queries = initial_results['success_queries']
         results = pd.DataFrame(initial_results['results'])
         print("initial data",initial_results['results'])
         print(results)
@@ -77,7 +80,7 @@ def process_query():
         print("Results are : ",newResults)
         errors = pd.DataFrame(initial_results['errors'])
         print("Errors are: ", errors)
-    return render_template('index.html',raw_query = raw_query,results = styled_html,queries = queries,errors = errors)
+    return render_template('index.html',raw_query = raw_query,results = styled_html,success_queries = success_queries,errors = errors)
 
 
 if __name__ == '__main__':
