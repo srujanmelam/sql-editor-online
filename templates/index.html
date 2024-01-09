@@ -52,8 +52,9 @@
         <hr/>
         <div class="row">
             <h5>Results:</h5>
-        
-            {{ results.to_html(classes='styled-table', border=0, index=False) | safe }}
+            {% for result in results %}
+            {{ result.to_html(classes='styled-table', border = 0, index=False) | safe }}<br/>
+            {% endfor %}
         </div>
         <div class="row">
             <h5>Errors:</h5>

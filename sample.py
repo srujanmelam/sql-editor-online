@@ -64,23 +64,25 @@ def process_query():
         results = pd.DataFrame(initial_results['results'])
         print("initial data",initial_results['results'])
         print(results)
-        newResults = []
-        for i in results1:
-            if(len(i)>0):
-                newResults.append(i)
-
-        
-
-        styled_html = results.style.set_table_styles([
-    {'selector': 'th', 'props': [('border', '1px solid black')]},
-    {'selector': 'td, th', 'props': [('border-collapse', 'collapse'), ('border', '1px solid black'), ('padding', '8px')]},
-    {'selector': 'table', 'props': [('border-collapse', 'collapse'), ('width', '100%')]},
-])
+        res_final = []
+        for res in results1:
+            res_final.append(pd.DataFrame(res))
+        styled_html = []
+        for res in res_final:
+            styled_html.append(res.style.set_table_styles([{'selector': 'th', 'props': [('border', '1px solid black')]},
+            {'selector': 'td, th', 'props': [('border-collapse', 'collapse'), ('border', '1px solid black'), ('padding', '8px')]},
+            {'selector': 'table', 'props': [('border-collapse', 'collapse'), ('width', '100%')]},
+            ]))
+#         styled_html = res_final.style.set_table_styles([
+#     {'selector': 'th', 'props': [('border', '1px solid black')]},
+#     {'selector': 'td, th', 'props': [('border-collapse', 'collapse'), ('border', '1px solid black'), ('padding', '8px')]},
+#     {'selector': 'table', 'props': [('border-collapse', 'collapse'), ('width', '100%')]},
+# ])
        
-        print("Results are : ",newResults)
         errors = pd.DataFrame(initial_results['errors'])
         print("Errors are: ", errors)
-    return render_template('index.html',raw_query = raw_query,results = styled_html,success_queries = success_queries,errors = errors)
+        #,results = styled_html
+    return render_template('index.html',results=styled_html,raw_query = raw_query,success_queries = success_queries,errors = errors)
 
 
 if __name__ == '__main__':
