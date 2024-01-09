@@ -15,15 +15,16 @@ c = conn.cursor()
 def sql_executor(queries):
     results = []
     errors = []
-    try:
-        for query in queries:
+    for query in queries:
+        try:
             c.execute(query)
-            data = c.fetchall()
-            results.append(data)
-    except Exception as e:
-        # Handle the exception here
-        error_message = f"Error executing SQL query: {e}"
-        errors.append({'error': error_message})
+        except Exception as e:
+            # Handle the exception here
+            error_message = f"Error executing SQL query: {e}"
+            errors.append({'error': error_message})
+        data = c.fetchall()
+        results.append(data)
+    
 
     return {'results': results, 'errors': errors}
 
