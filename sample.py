@@ -1,5 +1,5 @@
 # type: ignore
-from flask import Flask,render_template,url_for,request
+from flask import Flask,render_template,url_for,request,jsonify
 import sqlite3
 import pandas as pd
 import re
@@ -110,6 +110,25 @@ def process_query():
         print("Errors are: ", errors)
         #,results = styled_html
     return render_template('index.html',results=styled_html,raw_query = raw_query,success_queries = success_queries,errors = errors)
+
+
+#checking if a specific .sqlite file is present or not
+@app.route('/check_file', methods=['POST'])
+def check_file():
+    file_name = request.form.get('file_name')
+    print(file_name)
+
+    # Assuming SQLite files are in the same directory as app.py
+    #file_path = os.path.join(os.path.dirname(__file__), f'{file_name}.sqlite')
+    file_path = os.path.join(os.path.dirname(__file__), 'data', f'{file_name}.sqlite')
+    print("file path is :",file_path)
+    print("root path is :",os.path.dirname(__file__))
+    if os.path.exists(file_path):
+        response = {'status': 'success', 'message': 'File exists!'}
+    else:
+        response = {'status': 'error', 'message': 'File does not exist.'}
+
+    return render_template('result.html', result_file=response)
 
 
 @app.route('/awsPutFile', methods=['POST'])

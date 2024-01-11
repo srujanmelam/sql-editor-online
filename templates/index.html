@@ -35,8 +35,14 @@
                 <button type="reset" id="clearButton" onclick="clearer()">Clear</button>
                 <button id="save" onclick="downloadSQL()">Save Changes</button>
                 <button id="load" onclick="loadSQL()">Load Changes</button>
+                <h1>Check SQLite File</h1>
+                <form action="/check_file" method="post">
+                    <label for="file_name">Enter File Name (without extension):</label>
+                    <input type="text" name="file_name" id="file_name" required>
+                    <button type="submit">Check File</button>
+                </form>
             </div>
-
+            
 
         </div>
         <hr/>
