@@ -37,7 +37,7 @@ function downloadSQL() {
         fileInput.type = 'file';
         // Set accept attribute to restrict file types to HTML
         fileInput.accept = '.sql';
-        console.log("Entered!!");
+        console.log("Entered!!" + fileInput);
         fileInput.click();
        // Listen for changes in the file input
         fileInput.addEventListener('change', function() {
